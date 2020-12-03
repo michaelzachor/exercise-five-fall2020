@@ -33,13 +33,11 @@ function App() {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    console.log('firebase initialized');
   }, [firebaseConfig])
 
   // check to see if user is logged in
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
-      console.log({user});
       if(user) {
         setLoggedIn(true);
         setUserInformation(user);
@@ -58,13 +56,10 @@ function App() {
     const email = e.currentTarget.loginEmail.value;
     const password = e.currentTarget.loginPassword.value;
 
-    console.log({ email, password });
-
     firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(function(response) {
-      console.log('LOGIN RESPONSE', response);
       setLoggedIn(true);
     })
     .catch(function(error) {
@@ -93,14 +88,12 @@ function App() {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(function(response) {
-      console.log('VALID ACCOUNT CREATED FOR:', email, response);
       setLoggedIn(true);
     })
     .catch(function(error) {
       console.log('ACCOUNT CREATION FAILED', error);
     })
   }
-  console.log({ loggedIn });
 
   if(loading) return null;
 
